@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.11"
+# dependencies = []
+# ///
 """Write section files from section-writer subagent output.
 
 This SubagentStop hook is defined in hooks/hooks.json with a matcher for
