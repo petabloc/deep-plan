@@ -142,6 +142,22 @@ Table showing what blocks what:
 | section-04-api | section-02, section-03 | - | No |
 ```
 
+### Dependency Graph (Visual)
+
+Include a Mermaid `graph LR` that mirrors the dependency table. The table is machine-parseable; the diagram gives quick visual understanding of the critical path and parallelization opportunities.
+
+```markdown
+```mermaid
+graph LR
+    S1[section-01-foundation] --> S2[section-02-config]
+    S1 --> S3[section-03-parser]
+    S2 --> S4[section-04-api]
+    S3 --> S4
+```
+```
+
+Keep the diagram in sync with the table. If sections change, update both.
+
 ### Execution Order
 
 Which sections can run in parallel:
@@ -202,6 +218,16 @@ END_MANIFEST -->
 | section-04-llm-clients | 02 | 05 | Yes |
 | section-05-skill-orchestrator | 03, 04 | 06 | No |
 | section-06-integration | 05 | - | No |
+
+```mermaid
+graph LR
+    S1[01-foundation] --> S2[02-core-libs]
+    S2 --> S3[03-env-validation]
+    S2 --> S4[04-llm-clients]
+    S3 --> S5[05-skill-orchestrator]
+    S4 --> S5
+    S5 --> S6[06-integration]
+```
 
 ## Execution Order
 

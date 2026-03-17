@@ -51,6 +51,7 @@ LLMs instinctively write code when they see a feature request. This produces 25k
 - **API contracts** (endpoint paths, request/response shapes)
 - **Directory structure** (tree format)
 - **Configuration keys** (not full config files)
+- **Mermaid diagrams** (architecture, data flow, component boundaries)
 
 ### Context Anchor Files
 
@@ -103,6 +104,53 @@ src/
   parsers/
     json_ld.py       # JSON-LD extraction
     html.py          # HTML fallback parsing
+```
+
+---
+
+## Diagrams
+
+Use Mermaid diagrams to communicate architecture and relationships that are hard to convey in prose alone.
+
+### When to Include Diagrams
+
+- Architecture overview showing component boundaries and communication
+- Data flow through a pipeline or multi-step process
+- State machines with non-trivial transitions
+- Component dependency graphs
+
+### When NOT to Include Diagrams
+
+- Simple CRUD flows (prose is sufficient)
+- Restating what a table already shows
+- Implementation-level detail (internal class structure, call stacks)
+
+### Format
+
+Use fenced ` ```mermaid ` blocks. Supported diagram types:
+
+| Type | Syntax | Best For |
+|------|--------|----------|
+| Flowchart | `graph TD` / `graph LR` | Architecture, component relationships |
+| Sequence | `sequenceDiagram` | Request flows, multi-service interactions |
+| State | `stateDiagram-v2` | Lifecycle, state machines |
+
+### Constraints
+
+- **5–15 nodes max** per diagram. If larger, split into multiple diagrams.
+- Label edges with the relationship (e.g., `-->|"gRPC"|`), not just arrows.
+- Keep node labels short (2–4 words).
+
+### Example
+
+```mermaid
+graph TD
+    CLI[CLI Client] -->|gRPC| API[API Gateway]
+    UI[Web UI] -->|HTTP| API
+    API --> Auth[Auth Service]
+    API --> Catalog[Blueprint Catalog]
+    Catalog --> DB[(PostgreSQL)]
+    Auth --> IDP[Identity Provider]
 ```
 
 ---
